@@ -1,0 +1,27 @@
+
+pipeline {
+    agent any
+    parameters {
+    string(name: 'STACK_NAME', defaultValue: 'example-stack', description: 'Enter the CloudFormation Name')
+    string(name: 'PARAMETERS_FILE_NAME', defaultValue: ' example-stack-params.props', description: 'Enter the Parameter filename(must contain ext)')
+    string(name: 'TEMPLATE_NAME', defaultValue: 'this.yml', description: 'Enter the CloudFormatioon template File Name')
+    choice(
+      name: 'REGION',
+      choices: [
+        ' ',
+        'us-west-1',
+        'us-west-2',
+        'us-west-3                                                         
+    ],
+    description: "AWS Accout Region"
+  )
+ }
+  stages {
+    stage('Submit Stack') {
+       steps {
+        sh "cat wordpress.json"
+// "aws cloudformation deploy --stack-name wordpress --tenplate-file wordpress.json --region 'us-west1' --parameter-overrides DBPassord=abcd1234  DBRootPassword=abcd1234
+    }                                                           
+   }
+  }
+}
