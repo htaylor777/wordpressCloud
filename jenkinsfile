@@ -2,26 +2,28 @@
 pipeline {
     agent any
     parameters {
-    string(name: 'STACK_NAME', defaultValue: 'example-stack', description: 'Enter the CloudFormation Name')
-    string(name: 'PARAMETERS_FILE_NAME', defaultValue: ' example-stack-params.props', description: 'Enter the Parameter filename(must contain ext)')
-    string(name: 'TEMPLATE_NAME', defaultValue: 'this.yml', description: 'Enter the CloudFormatioon template File Name')
+    string(name: 'STACK_NAME', defaultValue: 'example-stack', description: 'Enter the CloudFormation Stack Name.')
+    string(name: 'PARAMETERS_FILE_NAME', defaultValue: 'example-stack-parameters.properties', description: 'Enter the Parameters File Name (Must contain file extension type *.properties)')
+    string(name: 'TEMPLATE_NAME', defaultValue: '01_s3cft.yml', description: 'Enter the CloudFormation Template File Name')
     choice(
       name: 'REGION',
       choices: [
-        ' ',
-        'us-west-1',
-        'us-west-2',
-        'us-west-3                                                         
-    ],
-    description: "AWS Accout Region"
-  )
- }
-  stages {
-    stage('Submit Stack') {
-       steps {
-        sh "cat wordpress.json"
-// "aws cloudformation deploy --stack-name wordpress --tenplate-file wordpress.json --region 'us-west1' --parameter-overrides DBPassord=abcd1234  DBRootPassword=abcd1234
-    }                                                           
-   }
+          ' ',
+          'us-east-1',
+          'us-east-2',
+          'us-west-2'
+          ],
+      description: 'AWS Account Region'
+    )
   }
-}
+  stages {
+        stage('Submit Stack') {
+            steps {
+             sh "cat wordpress.json"
+             //sh "aws cloudformation deploy --stack-name ${STACK_NAME} --template-file ${TEMPLATE_NAME} --region 'us-west-2' --parameter-overrides DBPassword=abcd1234 DBRootPassword=abcd1234 DBUser=admin KeyName=minikubetest"   
+             //sh "aws cloudformation deploy --stack-name wordpress-test01 --template-file 02_wordpress.json --region 'us-west-2' --parameter-overrides file://02_wordpress_parameter.properties"      
+           //  sh "aws cloudformation deploy --stack-name ${STACK_NAME} --template-file ${TEMPLATE_NAME} --region ${REGION} --parameter-overrides file://${PARAMETERS_FILE_NAME}"      
+              }
+             }
+            }
+            }
