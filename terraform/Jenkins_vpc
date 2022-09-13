@@ -4,7 +4,7 @@ pipeline {
         stage('Clone Terraform Repo') {
             steps {
                 echo 'Hello World'
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-lt', url: 'https://github.com/htaylor777/wordPressCloud.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'jenkins-private-key', url: 'https://github.com/htaylor777/wordPressCloud.git']]])
         }}
         stage('Terraform Provision') {
             steps {
